@@ -15,8 +15,7 @@
   cmake,
   darwin,
   gitUpdater,
-  ffmpeg,
-  pango
+  ffmpeg
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "shotcut";
@@ -26,7 +25,8 @@ stdenv.mkDerivation (finalAttrs: {
     owner = "mltframework";
     repo = "shotcut";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-sOBGLQYRGHcXNoKTmqbBqmheUFHe7p696BTCiwtF5JY=";
+    #hash = "sha256-sOBGLQYRGHcXNoKTmqbBqmheUFHe7p696BTCiwtF5JY=";
+    hash="sha256-sOBGLQYRGHcXNoKTmqbBqmheUFHe7p696BTCiweeeeY=";
   };
 
   nativeBuildInputs = [
@@ -42,7 +42,6 @@ stdenv.mkDerivation (finalAttrs: {
     gettext
     mlt
     fftw
-    pango
     qt6.qtbase
     qt6.qttools
     qt6.qtmultimedia
