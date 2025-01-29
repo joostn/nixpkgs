@@ -38,6 +38,7 @@
   SDL2,
   gitUpdater,
   libarchive,
+  pango
 }:
 
 stdenv.mkDerivation rec {
@@ -61,6 +62,7 @@ stdenv.mkDerivation rec {
       pkg-config
       which
       makeWrapper
+      pango
     ]
     ++ lib.optionals cudaSupport [
       cudaPackages.cuda_nvcc
