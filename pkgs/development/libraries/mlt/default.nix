@@ -38,7 +38,7 @@
   SDL2,
   gitUpdater,
   libarchive,
-  pango
+  pango,
   gdk-pixbuf
 }:
 
