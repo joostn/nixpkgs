@@ -16,10 +16,11 @@
   darwin,
   gitUpdater,
   ffmpeg,
+  pango
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "shotcut";
-  version = "24.11.17";
+  version = "25.01.25";
 
   src = fetchFromGitHub {
     owner = "mltframework";
@@ -41,6 +42,7 @@ stdenv.mkDerivation (finalAttrs: {
     gettext
     mlt
     fftw
+    pango
     qt6.qtbase
     qt6.qttools
     qt6.qtmultimedia
