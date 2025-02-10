@@ -112,7 +112,8 @@ let
 
   triton = throw "python3Packages.torch: use _tritonEffective instead of triton to avoid divergence";
 
-  rocmPackages = rocmPackages;
+  #rocmPackages = rocmPackages_5;
+  inherit rocmPackages;
 
   setBool = v: if v then "1" else "0";
 
