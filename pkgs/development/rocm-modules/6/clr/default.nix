@@ -103,26 +103,26 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   patches = [
-    (fetchpatch {
-      name = "add-missing-operators.patch";
-      url = "https://github.com/ROCm/clr/commit/86bd518981b364c138f9901b28a529899d8654f3.patch";
-      hash = "sha256-lbswri+zKLxif0hPp4aeJDeVfadhWZz4z+m+G2XcCPI=";
-    })
-    (fetchpatch {
-      name = "static-functions.patch";
-      url = "https://github.com/ROCm/clr/commit/77c581a3ebd47b5e2908973b70adea66891159ee.patch";
-      hash = "sha256-auBedbd7rghlKav7A9V6l64J7VmtE9GizIdi5gWj+fs=";
-    })
-    (fetchpatch {
-      name = "extend-hip-isa-compatibility-check.patch";
-      url = "https://salsa.debian.org/rocm-team/rocm-hipamd/-/raw/d6d20142c37e1dff820950b16ff8f0523241d935/debian/patches/0026-extend-hip-isa-compatibility-check.patch";
-      hash = "sha256-eG0ALZZQLRzD7zJueJFhi2emontmYy6xx8Rsm346nQI=";
-    })
-    (fetchpatch {
-      name = "improve-rocclr-isa-compatibility-check.patch";
-      url = "https://salsa.debian.org/rocm-team/rocm-hipamd/-/raw/d6d20142c37e1dff820950b16ff8f0523241d935/debian/patches/0025-improve-rocclr-isa-compatibility-check.patch";
-      hash = "sha256-8eowuRiOAdd9ucKv4Eg9FPU7c6367H3eP3fRAGfXc6Y=";
-    })
+    # (fetchpatch {
+    #   name = "add-missing-operators.patch";
+    #   url = "https://github.com/ROCm/clr/commit/86bd518981b364c138f9901b28a529899d8654f3.patch";
+    #   hash = "sha256-lbswri+zKLxif0hPp4aeJDeVfadhWZz4z+m+G2XcCPI=";
+    # })
+    # (fetchpatch {
+    #   name = "static-functions.patch";
+    #   url = "https://github.com/ROCm/clr/commit/77c581a3ebd47b5e2908973b70adea66891159ee.patch";
+    #   hash = "sha256-auBedbd7rghlKav7A9V6l64J7VmtE9GizIdi5gWj+fs=";
+    # })
+    # (fetchpatch {
+    #   name = "extend-hip-isa-compatibility-check.patch";
+    #   url = "https://salsa.debian.org/rocm-team/rocm-hipamd/-/raw/d6d20142c37e1dff820950b16ff8f0523241d935/debian/patches/0026-extend-hip-isa-compatibility-check.patch";
+    #   hash = "sha256-eG0ALZZQLRzD7zJueJFhi2emontmYy6xx8Rsm346nQI=";
+    # })
+    # (fetchpatch {
+    #   name = "improve-rocclr-isa-compatibility-check.patch";
+    #   url = "https://salsa.debian.org/rocm-team/rocm-hipamd/-/raw/d6d20142c37e1dff820950b16ff8f0523241d935/debian/patches/0025-improve-rocclr-isa-compatibility-check.patch";
+    #   hash = "sha256-8eowuRiOAdd9ucKv4Eg9FPU7c6367H3eP3fRAGfXc6Y=";
+    # })
   ];
 
   postPatch = ''
