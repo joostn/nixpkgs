@@ -36,6 +36,10 @@ stdenv.mkDerivation (finalAttrs: {
   postInstall = ''
     wrapPythonProgramsIn $out
     mv $out/libexec/rocm_smi/.rsmiBindings.py-wrapped $out/libexec/rocm_smi/rsmiBindings.py
+    ln -s $out/lib/librocm_smi64.so.5 $out/rocm_smi/lib/librocm_smi64.so.5
+    ln -s $out/lib/librocm_smi64.so.5.0 $out/rocm_smi/lib/librocm_smi64.so.5.0
+    rm -f $out/rocm_smi/lib/librocm_smi64.so.1
+    rm -f $out/rocm_smi/lib/librocm_smi64.so.1.0   
   '';
 
   passthru.updateScript = rocmUpdateScript {
