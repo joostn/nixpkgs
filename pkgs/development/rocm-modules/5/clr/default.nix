@@ -139,6 +139,9 @@ stdenv.mkDerivation (finalAttrs: {
     # Replace rocm-opencl-icd functionality
     mkdir -p $icd/etc/OpenCL/vendors
     echo "$out/lib/libamdocl64.so" > $icd/etc/OpenCL/vendors/amdocl64.icd
+
+    # remove dangling symlink
+    rm -f $out/hip/bin/.hipVersion
   '';
 
   passthru = {
