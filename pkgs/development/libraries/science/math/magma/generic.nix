@@ -119,10 +119,10 @@ stdenv.mkDerivation {
   # Fixup for the python test runners
   postPatch = ''
     patchShebangs ./testing/run_{tests,summarize}.py
-    substituteInPlace ./testing/run_tests.py \
-      --replace-fail \
-        "print >>sys.stderr, cmdp, \"doesn't exist (original name: \" + cmd + \", precision: \" + precision + \")\"" \
-        "print(f\"{cmdp} doesn't exist (original name: {cmd}, precision: {precision})\", file=sys.stderr)"
+#    substituteInPlace ./testing/run_tests.py \
+#      --replace-fail \
+#        "print >>sys.stderr, cmdp, \"doesn't exist (original name: \" + cmd + \", precision: \" + precision + \")\"" \
+#        "print(f\"{cmdp} doesn't exist (original name: {cmd}, precision: {precision})\", file=sys.stderr)"
   '';
 
   nativeBuildInputs =
