@@ -15,7 +15,7 @@
   fetchurl,
   gfortran,
   gpuTargets ? [ ], # Non-CUDA targets, that is HIP
-  rocmPackages_5,
+  rocmPackages,
   lapack,
   lib,
   libpthreadstubs,
@@ -47,7 +47,8 @@ let
   inherit (effectiveCudaPackages) cudaAtLeast flags cudaOlder;
 
   # move to newer ROCm version once supported
-  rocmPackages = rocmPackages_5;
+  #rocmPackages = rocmPackages_5;
+  inherit rocmPackages;
 
   # NOTE: The lists.subtractLists function is perhaps a bit unintuitive. It subtracts the elements
   #   of the first list *from* the second list. That means:
