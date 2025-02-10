@@ -92,7 +92,7 @@
 
   # ROCm dependencies
   rocmSupport ? config.rocmSupport,
-  rocmPackages_5,
+  rocmPackages,
   gpuTargets ? [ ],
 
   vulkanSupport ? false,
@@ -112,7 +112,7 @@ let
 
   triton = throw "python3Packages.torch: use _tritonEffective instead of triton to avoid divergence";
 
-  rocmPackages = rocmPackages_5;
+  rocmPackages = rocmPackages;
 
   setBool = v: if v then "1" else "0";
 
@@ -181,7 +181,7 @@ let
       clr
       rccl
       miopen
-      miopengemm
+      #miopengemm
       rocrand
       rocblas
       rocsparse
