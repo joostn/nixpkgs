@@ -4,8 +4,8 @@
   cmake,
   cudaPackages,
   cudaSupport ? config.cudaSupport,
+  fetchFromGitHub,
   fetchpatch,
-  fetchurl,
   gfortran,
   gpuTargets ? [ ], # Non-CUDA targets, that is HIP
   rocmPackages,
@@ -115,9 +115,12 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "magma";
   version = "2.9.0";
 
-  src = fetchurl {
-    url = "https://icl.cs.utk.edu/projectsfiles/magma/downloads/magma-${finalAttrs.version}.tar.gz";
-    hash = "sha256-/3f9Nyaz3+w7+1V5CwZICqXMOEOWwts1xW/a5KgsZBw=";
+  # Prefer github over release tarballs so that hipify will be ran
+  src = fetchFromGitHub {
+    owner = "icl-utk-edu";
+    repo = "magma";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-ZV50id9qiCrc1K87812Lvv1tmeU/6vhpxFCz8nj61wM=";
   };
 
   # Magma doesn't have anything which could be run under doCheck, but it does build test suite executables.
@@ -133,6 +136,12 @@ stdenv.mkDerivation (finalAttrs: {
       name = "drop-cmp0037-old.patch";
       url = "https://github.com/icl-utk-edu/magma/commit/2fecaf3f0c811344363f713669c1fe30f6879acd.patch";
       hash = "sha256-Dfzq2gqoLSByCLWV5xvY/lXZeVa/yQ67lDSoIAa9jUU=";
+    })
+    (fetchpatch {
+      # Upstream isn't yet ROCm 7.0 compatible, apply hipblas fix from AMD fork
+      name = "ROCm-7.0-compat.patch";
+      url = "https://github.com/ROCm/utk-magma/commit/91c4f720a17e842b364e9de41edeef76995eb9ad.patch";
+      hash = "sha256-9kIoQRc9Kk7W3LrMe8H8drUl2PcAm6nLH5XgUtzJL7g=";
     })
   ];
 

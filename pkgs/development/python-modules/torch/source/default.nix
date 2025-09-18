@@ -3,6 +3,7 @@
   lib,
   fetchFromGitHub,
   fetchFromGitLab,
+  fetchpatch,
   git-unroll,
   buildPythonPackage,
   python,
@@ -61,6 +62,7 @@
   sympy,
   types-dataclasses,
   typing-extensions,
+  magmaSupport ? (cudaSupport || (rocmSupport && (lib.versionOlder rocmPackages.clr.version "7"))),
   # ROCm build and `torch.compile` requires `triton`
   tritonSupport ? (!stdenv.hostPlatform.isDarwin),
   triton,
@@ -192,7 +194,7 @@ let
   );
 
   # Use vendored CK as header only dep if rocmPackages' CK doesn't properly support targets
-  vendorComposableKernel = rocmSupport && !rocmPackages.composable_kernel.anyMfmaTarget;
+  vendorComposableKernel = false;
 
   rocmtoolkit_joined = symlinkJoin {
     name = "rocm-merged";
@@ -306,6 +308,16 @@ buildPythonPackage.override { inherit stdenv; } rec {
   ++ lib.optionals cudaSupport [
     ./fix-cmake-cuda-toolkit.patch
     ./nvtx3-hpp-path-fix.patch
+  ]
+  ++ lib.optionals (rocmSupport && (lib.versionAtLeast rocmPackages.clr.version "7.0")) [
+    (fetchpatch {
+      # [ROCm] Remove use of warpsize on host-side compilation
+      # Required for ROCm 7.x compat
+      # TODO: remove for torch >= 2.9
+      name = "pytorch-rocm-remove-host-warpsize.patch";
+      url = "https://github.com/pytorch/pytorch/commit/04bd7e6850e8efec77994963ffee87549555b9c3.patch";
+      hash = "sha256-riBj5kongM9bWvStl8tzifuqX/jlsGmiaKTno14IgJE=";
+    })
   ]
   ++ lib.optionals stdenv.hostPlatform.isLinux [
     # Propagate CUPTI to Kineto by overriding the search path with environment variables.
@@ -578,7 +590,7 @@ buildPythonPackage.override { inherit stdenv; } rec {
     ]
   )
   ++ lib.optionals rocmSupport [ rocmPackages.llvm.openmp ]
-  ++ lib.optionals (cudaSupport || rocmSupport) [ effectiveMagma ]
+  ++ lib.optionals magmaSupport [ effectiveMagma ]
   ++ lib.optionals stdenv.hostPlatform.isLinux [ numactl ]
   ++ lib.optionals tritonSupport [ _tritonEffective ]
   ++ lib.optionals MPISupport [ mpi ]
