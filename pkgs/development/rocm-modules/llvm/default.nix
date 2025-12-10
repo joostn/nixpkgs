@@ -341,17 +341,7 @@ overrideLlvmPackagesRocm (s: {
         passthru = old.passthru // {
           inherit gcc-prefix;
         };
-        patches = [
-          (fetchpatch {
-            # [PATCH] [clang] Install scan-build-py into plain "lib" directory
-            # Backported so 19/clang/gnu-install-dirs patch applies to AMD's LLVM fork
-            hash = "sha256-bOqAjBwRKcERpQkiBpuojGs6ddd5Ht3zL5l3TuJK2w8=";
-            url = "https://github.com/llvm/llvm-project/commit/816fde1cbb700ebcc8b3df81fb93d675c04c12cd.patch";
-            relative = "clang";
-          })
-        ]
-        ++ old.patches
-        ++ [
+        patches = old.patches ++ [
           # Never add FHS include paths
           ./clang-bodge-ignore-systemwide-incls.diff
           # Prevents builds timing out if a single compiler invocation is very slow but
