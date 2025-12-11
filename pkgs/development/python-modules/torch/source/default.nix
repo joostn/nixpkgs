@@ -309,11 +309,10 @@ buildPythonPackage.override { inherit stdenv; } rec {
     ./fix-cmake-cuda-toolkit.patch
     ./nvtx3-hpp-path-fix.patch
   ]
-  ++ lib.optionals (rocmSupport && (lib.versionAtLeast rocmPackages.clr.version "7.0")) [
+  ++ lib.optionals (rocmSupport && (lib.versionAtLeast rocmPackages.clr.version "7.0") && (lib.versionOlder version "2.9")) [
     (fetchpatch {
       # [ROCm] Remove use of warpsize on host-side compilation
       # Required for ROCm 7.x compat
-      # TODO: remove for torch >= 2.9
       name = "pytorch-rocm-remove-host-warpsize.patch";
       url = "https://github.com/pytorch/pytorch/commit/04bd7e6850e8efec77994963ffee87549555b9c3.patch";
       hash = "sha256-riBj5kongM9bWvStl8tzifuqX/jlsGmiaKTno14IgJE=";
