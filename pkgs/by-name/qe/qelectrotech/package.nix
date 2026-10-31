@@ -5,7 +5,7 @@
   installShellFiles,
   pkg-config,
   cmake,
-  libsForQt5,
+  kdePackages,
   pugixml,
 }:
 let
@@ -28,19 +28,13 @@ stdenv.mkDerivation rec {
   };
 
   patches = [
-    # stripped down version of https://codeberg.org/gentoo/gentoo/src/branch/master/sci-electronics/qelectrotech/files/qelectrotech-0.90_pre20250820-cmake.patch
     ./system-pugixml.patch
   ];
 
-  # fix wrong cmake conditional
-  postPatch = ''
-    substituteInPlace cmake/fetch_kdeaddons.cmake \
-      --replace-fail "DEFINED BUILD_WITH_KF5" "BUILD_WITH_KF5"
-  '';
-
   cmakeFlags = [
     "-DBUILD_WITH_KF5=OFF"
-    # relies on vendored catch2
+    "-DBUILD_WITH_KF6=ON"
+    "-DBUILD_KF6=OFF"
     "-DPACKAGE_TESTS=OFF"
     "-DFETCHCONTENT_SOURCE_DIR_SINGLEAPPLICATION=${singleApplication}"
     "-DBUILD_PUGIXML=OFF"
@@ -50,13 +44,15 @@ stdenv.mkDerivation rec {
     installShellFiles
     pkg-config
     cmake
-    libsForQt5.wrapQtAppsHook
-    libsForQt5.qttools
+    kdePackages.wrapQtAppsHook
+    kdePackages.qttools
   ];
 
   buildInputs = [
-    libsForQt5.qtbase
-    libsForQt5.qtsvg
+    kdePackages.qtbase
+    kdePackages.qtsvg
+    kdePackages.kwidgetsaddons
+    kdePackages.kcoreaddons
     pugixml
   ];
 
@@ -85,7 +81,7 @@ stdenv.mkDerivation rec {
     homepage = "https://qelectrotech.org/";
     license = lib.licenses.gpl2;
     maintainers = with lib.maintainers; [ yvesf ];
-    platforms = libsForQt5.qtbase.meta.platforms;
+    platforms = kdePackages.qtbase.meta.platforms;
     broken = stdenv.hostPlatform.isDarwin;
   };
 }

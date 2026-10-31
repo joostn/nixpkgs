@@ -1,0 +1,6 @@
+--- a/sources/TerminalStrip/ui/terminalstripeditor.ui
++++ b/sources/TerminalStrip/ui/terminalstripeditor.ui
+@@ -69,14 +69,13 @@
+          <item>
+           <widget class="KColorCombo" name="m_bridge_color_cb"/>
+          </item>
